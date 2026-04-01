@@ -1,0 +1,21 @@
+services:
+  frontend:
+    build: ./tax-calculator-frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - service-a
+
+  service-a:
+    build: ./node/service-a
+    ports:
+      - "3000:3000"
+    depends_on:
+      - service-b
+    environment:
+      - TAX_SERVICE_URL=http://service-b:4000
+
+  service-b:
+    build: ./node/service-b
+    ports:
+      - "4000:4000"

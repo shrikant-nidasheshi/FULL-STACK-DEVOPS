@@ -1,0 +1,59 @@
+name: secound CI
+
+  
+on:
+  push:
+    branches:
+      - main
+    # paths:
+    #   - "docker/app1-hello/node"
+
+jobs:
+  buid-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: setup nodejs
+        uses: actions/setup-node@v6
+        with:
+              node-version: '25'
+
+      - name: install dependencies
+        working-directory: docker/app1-hello/node
+        run: npm ci
+
+      - name: Run the tests(id any)
+        working-directory: docker/app1-hello/node
+        run: npm test --if-present
+
+  docker-build-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: login to docker hub
+        uses: docker/login-action@v4
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v7
+        with:
+          context: docker/app1-hello/node
+          push: true
+          tags: |
+                ${{secrets.DOCKER_USERNAME}}/hello-node:latest
+
+
+      
+
+
+
+
+

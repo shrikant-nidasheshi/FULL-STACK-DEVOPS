@@ -6,10 +6,12 @@ const HOSTNAME = process.env.HOSTNAME || require('os').hostname();
 
 app.get("/", (req, res) => {
   res.json({
-    message: "Hello from Simple App (Node)",
+    message: "Hello from Simple App (Node) shrikant ",
     env: ENV,
     container: HOSTNAME
+    
   });
 });
 
-app.listen(PORT, () => console.log(`Node Hello listening on ${PORT}`));
+app.listen(PORT, () => console.log(`Node Hello listening on ${PORT}`)); 
+
