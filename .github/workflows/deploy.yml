@@ -25,7 +25,7 @@ jobs:
         working-directory: docker/app1-hello/node
         run: |
             cd docker/app1-hello/node
-            npm ci
+            npm install
 
 
       - name: Run the tests(id any)
